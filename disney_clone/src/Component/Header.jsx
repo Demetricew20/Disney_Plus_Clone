@@ -23,11 +23,16 @@ const Logo = styled.img`
 
 const NavMenu = styled.div`
     display: flex;
+    flex: 1;
+    margin-left: 25px;
+    align-items: center;
+    justify-content: space-around;
 
     a {
         display: flex;
         align-items: center;
         padding: 0 12px;
+        cursor: pointer;
 
         img{
             height: 20px;
@@ -36,6 +41,28 @@ const NavMenu = styled.div`
         span{
             font-size: 13px;
             letter-spacing: 1.42px;
+            position: relative;
+
+            &:after{
+                content: '';
+                height: 2px;
+                background-color: white;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -6px;
+                opacity: 0;
+                transition-origin: left center;
+                transition: all 250ms cubic-bezier(.25, .46, .45, .94) 0s;
+                transform: scaleX(0);
+            }
+        }
+
+        &:hover{
+            span:after{
+                transform: scaleX(1);
+                opacity: 1;
+            }
         }
     }
 `;
@@ -76,7 +103,7 @@ function Header() {
                     <span>SERIES</span>
                 </a>
             </NavMenu>
-            <UserImg > <AccountCircleIcon style={{fontSize: '4.75rem'}}/> </UserImg>
+            <UserImg > <AccountCircleIcon style={{fontSize: '3.5rem'}}/> </UserImg>
 
 
         </Nav>
