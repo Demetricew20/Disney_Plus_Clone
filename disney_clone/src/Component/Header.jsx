@@ -7,6 +7,7 @@ import watchlistIcon from '../Assets/images/watchlist-icon.svg';
 import originalsIcon from '../Assets/images/original-icon.svg';
 import moviesIcon from '../Assets/images/movie-icon.svg';
 import seriesIcon from '../Assets/images/series-icon.svg';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const Nav = styled.div`
     height: 70px;
@@ -39,6 +40,12 @@ const NavMenu = styled.div`
     }
 `;
 
+const UserImg = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+`;
+
 function Header() {
     return (
         <Nav>
@@ -69,6 +76,9 @@ function Header() {
                     <span>SERIES</span>
                 </a>
             </NavMenu>
+            <UserImg > <AccountCircleIcon style={{fontSize: '4.75rem'}}/> </UserImg>
+
+
         </Nav>
     )
 }
