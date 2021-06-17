@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImgSlider from '../Component/ImgSlider.jsx';
+import Viewers from '../Component/Viewers.jsx';
 import homeBackground from '../Assets/images/home-background.png';
 
 const Container = styled.main`
@@ -24,6 +25,7 @@ function Home() {
     return (
         <Container>
             <ImgSlider />
+            <Viewers />
         </Container>
     )
 }

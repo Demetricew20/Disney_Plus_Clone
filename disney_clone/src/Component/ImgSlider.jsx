@@ -18,6 +18,14 @@ const Carousel = styled(Slider)`
         }
     }
 
+    .slick-prev:before, .slick-next:before {
+        color: transparent;
+    }
+
+    .slick-dots li button:before {
+        color: #02BEDD;
+    }
+
     li.slick-active button:before {
         color: white;
     }
