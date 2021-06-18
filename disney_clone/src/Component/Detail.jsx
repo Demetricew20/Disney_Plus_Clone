@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import playButton from '../Assets/images/play-icon-black.png';
 import trailerButton from '../Assets/images/play-icon-white.png';
 import groupWatchButton from '../Assets/images/group-icon.png';
+import { selectMovies, setMovies } from '../features/movie/MovieSlice';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import db from '../Firebase';
 
 const Container = styled.div`
     min-height: calc(100vh - 70px);
@@ -121,13 +125,36 @@ const Description = styled.div`
 `;
 
 function Detail() {
+    const [movie, setMovie] = useState();
+    const {id} = useParams();
+
+    useEffect(() => {
+
+        //Grab movie from DB
+        db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc) => {
+            if(doc.exists){
+                setMovie(doc.data());
+            }
+            else{
+                window.location.href="/";
+            }
+        })
+
+    }, [])
+
+
     return (
         <Container>
+            {movie ?
+            <>
             <Background>
-                <img src="https://www.awn.com/sites/default/files/styles/original/public/image/attached/1046782-bao-003-lr.jpg?itok=B0CkKSdI" />
+                <img src={movie.backgroundImg} />
             </Background>
             <ImageTitle>
-                <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78" alt="Bao Title" />
+                <img src={movie.titleImg} alt="Movie Title" />
             </ImageTitle>
             <Controls>
                 <PlayButton>
@@ -146,11 +173,13 @@ function Detail() {
                 </GroupWatchButton>
             </Controls>
             <SubTitle>
-                2018 - 7m - Family, Fantasy, Kids, Animation
+                {movie.subTitle}
             </SubTitle>
             <Description>
-                A Chinese mom who's sad when her grown son leaves home gets another change at motherhood when one of her dumplings springs to life. But she finds that nothing stays cute and small forever.
+                {movie.description}
             </Description>
+            </>
+            : "" }
         </Container>
     )
 }

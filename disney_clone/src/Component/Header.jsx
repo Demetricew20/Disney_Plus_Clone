@@ -34,6 +34,8 @@ const NavMenu = styled.div`
         align-items: center;
         padding: 0 12px;
         cursor: pointer;
+        text-decoration: none;
+        color: white;
 
         img{
             height: 20px;
@@ -79,7 +81,7 @@ function Header() {
         <Nav>
             <Logo src={logoImg} alt="Disney Logo" />
             <NavMenu>
-                <a>
+                <a href="/">
                     <img src={homeIcon} alt="Home Icon" />
                     <span>HOME</span>
                 </a>
