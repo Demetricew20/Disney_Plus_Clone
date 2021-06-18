@@ -18,13 +18,13 @@ const Carousel = styled(Slider)`
         }
     }
 
-    .slick-prev:before, .slick-next:before {
-        color: transparent;
-    }
+    // .slick-prev:before, .slick-next:before {
+    //     color: transparent;
+    // }
 
-    .slick-dots li button:before {
-        color: #02BEDD;
-    }
+    // .slick-dots li button:before {
+    //     color: #02BEDD;
+    // }
 
     li.slick-active button:before {
         color: white;
@@ -72,16 +72,16 @@ function ImgSlider() {
     return (
         <Carousel {...settings}>
             <Wrap>
-                <img src={sliderBadging} alt="Series Image" />
+                <img src={sliderBadging} alt="Series " />
             </Wrap>
             <Wrap>
-                <img src={sliderBadag} alt="Movie Image" />
+                <img src={sliderBadag} alt="Movie " />
             </Wrap>
             <Wrap>
-                <img src={sliderScale} alt="Series Image" />
+                <img src={sliderScale} alt="Series " />
             </Wrap>
             <Wrap>
-                <img src={sliderWV} alt="Series Image" />
+                <img src={sliderWV} alt="Series " />
             </Wrap>
             
         </Carousel>
