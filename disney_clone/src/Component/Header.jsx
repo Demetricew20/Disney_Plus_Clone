@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { useHistory} from 'react-router';
+import {auth, provider} from '../Firebase';
 import styled from 'styled-components';
 import logoImg from '../Assets/images/logo.svg';
 import homeIcon from '../Assets/images/home-icon.svg';
@@ -7,7 +9,15 @@ import watchlistIcon from '../Assets/images/watchlist-icon.svg';
 import originalsIcon from '../Assets/images/original-icon.svg';
 import moviesIcon from '../Assets/images/movie-icon.svg';
 import seriesIcon from '../Assets/images/series-icon.svg';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { findRenderedComponentWithType } from 'react-dom/test-utils';
+import {
+    selectUserName,
+    selectUserPhoto,
+    setUserLogin,
+    setSignOut,
+}
+from '../features/user/UserSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Nav = styled.div`
     height: 70px;
@@ -70,43 +80,135 @@ const NavMenu = styled.div`
     }
 `;
 
-const UserImg = styled.div`
+const UserImg = styled.img`
     display: flex;
     align-items: center;
     cursor: pointer;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+`;
+
+const Login = styled.div`
+    border: 1px solid #f9f9f9;
+    padding: 8px 16px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 400ms ease 0s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f9f9f9;
+        color: #000;
+        border-color: transparent;
+    }
+`;
+
+const LoginContainer = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
 `;
 
 function Header() {
+
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        photo: '',
+    });
+
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if(user){
+                dispatch(setUserLogin({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                }))
+            }
+        })
+    }, [])
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const userName = useSelector(selectUserName);
+    const userPhoto = useSelector(selectUserPhoto);
+
+    const signIn = () => {
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            dispatch(setUserLogin({
+                name: result.user.displayName,
+                email: result.user.email,
+                photo: result.user.photoURL,
+            }))
+            setUser({
+                name: result.user.displayName,
+                email: result.user.email,
+                photo: result.user.photoURL,
+            })
+            history.push('/');
+        })
+        .catch(err => (console.log(err)))
+    }
+
+    const signOut = () => {
+        auth.signOut()
+        .then(() => {
+            dispatch(setSignOut());
+            history.push('/login');
+        })
+        .catch(err => (console.log(err)))
+    }
+
+    console.log(user);
+
     return (
         <Nav>
             <Logo src={logoImg} alt="Disney Logo" />
-            <NavMenu>
-                <a href="/">
-                    <img src={homeIcon} alt="Home Icon" />
-                    <span>HOME</span>
-                </a>
-                <a>
-                    <img src={searchIcon} alt="Search Icon" />
-                    <span>SEARCH</span>
-                </a>
-                <a>
-                    <img src={watchlistIcon} alt="Watchlist Icon" />
-                    <span>WATCHLIST</span>
-                </a>
-                <a>
-                    <img src={originalsIcon} alt="Originals Icon" />
-                    <span>ORIGINALS</span>
-                </a>
-                <a>
-                    <img src={moviesIcon} alt="Movies Icon" />
-                    <span>MOVIES</span>
-                </a>
-                <a>
-                    <img src={seriesIcon} alt="Series Icon" />
-                    <span>SERIES</span>
-                </a>
-            </NavMenu>
-            <UserImg > <AccountCircleIcon style={{fontSize: '3.5rem'}}/> </UserImg>
+            {
+                !userName ?
+                <LoginContainer>
+                    <Login onClick={signIn}>Login</Login> 
+                </LoginContainer>
+                
+                :
+                <>
+                <NavMenu>
+                    <a href="/">
+                        <img src={homeIcon} alt="Home Icon" />
+                        <span>HOME</span>
+                    </a>
+                    <a>
+                        <img src={searchIcon} alt="Search Icon" />
+                        <span>SEARCH</span>
+                    </a>
+                    <a>
+                        <img src={watchlistIcon} alt="Watchlist Icon" />
+                        <span>WATCHLIST</span>
+                    </a>
+                    <a>
+                        <img src={originalsIcon} alt="Originals Icon" />
+                        <span>ORIGINALS</span>
+                    </a>
+                    <a>
+                        <img src={moviesIcon} alt="Movies Icon" />
+                        <span>MOVIES</span>
+                    </a>
+                    <a>
+                        <img src={seriesIcon} alt="Series Icon" />
+                        <span>SERIES</span>
+                    </a>
+                </NavMenu>
+                <UserImg onClick={signOut} src={userPhoto} />
+
+                </>
+
+            }
+
 
 
         </Nav>
