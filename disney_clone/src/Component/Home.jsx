@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ImgSlider from '../Component/ImgSlider.jsx';
 import Viewers from '../Component/Viewers.jsx';
 import homeBackground from '../Assets/images/home-background.png';
+import Movies from '../Component/Movies.jsx';
 
 const Container = styled.main`
     min-height: calc(100vh  - 70px);
@@ -27,6 +28,7 @@ function Home() {
         <Container>
             <ImgSlider />
             <Viewers />
+            <Movies />
         </Container>
     )
 }
