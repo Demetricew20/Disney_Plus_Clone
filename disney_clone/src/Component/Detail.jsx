@@ -117,9 +117,11 @@ const SubTitle = styled.div`
 `;
 
 const Description = styled.div`
-    max-width: 700px;
+    max-width: 600px;
     line-height: 1.4;
     font-size: 20px;
+    font-weight: 600;
+    text-shadow: 2px 0px #000000;
     margin-top: 16px;
     color: rgb(249, 249, 249);
 `;
