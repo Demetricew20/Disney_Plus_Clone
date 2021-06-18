@@ -145,11 +145,6 @@ function Header() {
                 email: result.user.email,
                 photo: result.user.photoURL,
             }))
-            setUser({
-                name: result.user.displayName,
-                email: result.user.email,
-                photo: result.user.photoURL,
-            })
             history.push('/');
         })
         .catch(err => (console.log(err)))
@@ -163,8 +158,6 @@ function Header() {
         })
         .catch(err => (console.log(err)))
     }
-
-    console.log(user);
 
     return (
         <Nav>

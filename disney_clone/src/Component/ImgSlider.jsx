@@ -10,7 +10,7 @@ import sliderScale from '../Assets/images/slider-scale.jpg';
 import sliderWV from '../Assets/images/slider-scales.jpg';
 
 const Carousel = styled(Slider)`
-    margin-top: 20px;
+    margin-top: 10px;
 
     ul li button {
         &:before: {
@@ -24,8 +24,16 @@ const Carousel = styled(Slider)`
     // }
 
     // .slick-dots li button:before {
-    //     color: #02BEDD;
+    //     color: #0487A5;
     // }
+
+    .slick-dots li button:before {
+        color: #0487A5;
+    }
+
+    .slick-prev:before, .slick-next:before{
+        display: none;
+    }
 
     li.slick-active button:before {
         color: white;
